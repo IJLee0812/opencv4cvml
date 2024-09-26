@@ -61,6 +61,27 @@ def time_inverse():
     cv2.waitKey()
     cv2.destroyAllWindows()
 
+def time_inverse_NumPy():
+    src = cv2.imread('lenna.bmp', cv2.IMREAD_GRAYSCALE)
+
+    if src is None:
+        print('Image load failed!')
+        return
+
+    dst = np.empty(src.shape, dtype=src.dtype)
+
+    tm = cv2.TickMeter()
+    tm.start()
+
+    dst = ~src # changed
+
+    tm.stop()
+    print('Image inverse implementation took %4.3f ms.' % tm.getTimeMilli())
+
+    cv2.imshow('src', src)
+    cv2.imshow('dst', dst)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
 
 def useful_func():
     img = cv2.imread('lenna.bmp', cv2.IMREAD_GRAYSCALE)
@@ -90,7 +111,11 @@ def useful_func():
 
 
 if __name__ == '__main__':
-    mask_setTo()
-    mask_copyTo()
-    time_inverse()
-    useful_func()
+    # mask_setTo()
+    
+    # mask_copyTo()
+    
+    time_inverse() # Image inverse implementation took 201.582 ms.
+    time_inverse_NumPy() # Image inverse implementation took 0.333 ms.
+
+    # useful_func()
